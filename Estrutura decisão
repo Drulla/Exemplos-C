@@ -1,0 +1,29 @@
+// estruturas de decisão if, else, else if
+//						se, então, então se
+#include <stdio.h>
+
+int main(){
+
+	// delcaração de variavel
+	int idade;
+
+	//entrada
+	printf("Qual é a sua idade?");
+	fflush(stdout);
+	scanf("%d", &idade);
+
+	//processamento
+	if (idade <18){
+		printf ("Voce é menor de idade");
+		}
+	else if (idade>18 && idade <60){
+		printf ("Voce é adulto");
+	}
+	else {
+		printf("Voce é idoso");
+	}
+	//saida
+	printf("\nSua idade é: %d anos", idade);
+
+	return 0;
+}
