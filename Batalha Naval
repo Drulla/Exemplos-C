@@ -1,0 +1,684 @@
+#include <iostream> // entrada e saida de dados.
+#include <locale.h> // Saída de dados com acentuação.
+#include <iomanip> // Configuração de espaçamento na saída de informação na tela.
+//#include <conio.h>
+
+constexpr auto N = 15; // Valores constantes.
+constexpr auto Tlinhas = N; //Numero de linhas no tabuleiro 
+constexpr auto Tcolunas = N; //Numero de Colunas no tabuleiro 
+constexpr auto posmin = 66; //Numero minimo possivel de posições ocupadas pelas embarcações 
+constexpr auto posmax = 90; //Numero maximo possivel de posições ocupadas pelas embarcações  
+
+using namespace std;
+
+class tabuleiro
+{
+public:
+
+	int matriz[Tlinhas][Tcolunas];
+	int matrizmostra[Tlinhas][Tcolunas];
+	int Vida = 0;
+	int limite = 0;
+	int pontos = 0;
+
+	tabuleiro() // Contrutor dos tabuleiros.
+	{
+		for (int i = 0; i < Tlinhas; i++)
+		{
+			for (int j = 0; j < Tcolunas; j++)
+			{
+				matriz[i][j] = 0;
+				matrizmostra[i][j] = 0;
+			}
+		}
+	}
+
+
+
+	void mostrematriz(char nome[]) // função que mostra todos as posições de embarcações ocupadas do tabuleiro.
+	{
+		cout << endl << " -------------------------------------------------- ";
+		cout << endl << " |          ~ = Água; O = Embarcação;             |";
+		cout << endl << " -------------------------------------------------- ";
+		cout << endl << endl << setw(22) << "JOGADOR " << nome << endl;
+		cout << endl << "	Posições ocupadas do jogador : " << limite << "	Mínimo necessário: " << posmin << endl;
+		cout << "						Máximo possível:   " << posmax << endl;
+		cout << "   ";
+		for (int i = 0; i < Tcolunas; i++)
+		{
+			cout << setw(3) << i + 1;
+		}
+		cout << endl;
+		cout << "   ";
+		for (int i = 0; i < Tcolunas; i++)
+		{
+			cout << setw(2) << "___";
+		}
+		cout << endl;
+		for (int i = 0; i < Tlinhas; i++)
+		{
+			cout << setw(2) << i + 1 << " |";
+			for (int j = 0; j < Tcolunas; j++)
+			{
+				{
+					if (matriz[i][j] == 0)// Verifica se o código deve imprimir '~' para espaço vazio, ou, 'O' para espaço ocupado por embarcação.
+					{
+						cout << setw(2) << " ~ ";
+					}
+					else
+					{
+						cout << setw(2) << " O ";
+					}
+				}
+			}
+			cout << endl;
+		}
+	}
+
+	void mostramatrizvisivel(char nome[], int vezes)
+	{
+		cout << endl << " -------------------------------------------------- ";
+		cout << endl << " |       ~ = Água; @ = Acerto; X = Erro;          |";
+		cout << endl << " -------------------------------------------------- ";
+		cout << endl << endl << setw(20) << "Atualmente disparando: JOGADOR " << nome << endl;
+		cout << "						Disparos restantes:   " << vezes << endl;
+		cout << "   ";
+		for (int i = 0; i < Tcolunas; i++)
+		{
+			cout << setw(3) << i + 1;
+		}
+		cout << endl;
+		cout << "   ";
+		for (int i = 0; i < Tcolunas; i++)
+		{
+			cout << setw(2) << "___";
+		}
+		cout << endl;
+		for (int i = 0; i < Tlinhas; i++)
+		{
+			cout << setw(2) << i + 1 << " |";
+			for (int j = 0; j < Tcolunas; j++)
+			{
+				{
+					if (matrizmostra[i][j] == 0)// Verifica quando o código deve imprimir acerto"@" ou erro"X" no lugar dos lugares sem que ainda não levaram tiro.
+					{
+						cout << setw(2) << " ~ ";
+					}
+					else
+					{
+						if (matrizmostra[i][j] == 1)
+						{
+							cout << setw(2) << " @ ";
+						}
+						else
+						{
+							cout << setw(2) << " X ";
+						}
+					}
+				}
+			}
+			cout << endl;
+		}
+
+	}
+
+	int tiro(int line, int column)
+	{
+		if (matrizmostra[line][column] == 1 || matrizmostra[line][column] == 2)
+		{
+			cout << endl << "Voce ja atirou nesta posição, escolha outra posição por favor! >=[";
+			cout << endl << "Você perdeu um disparo, tente não fazer isso denovo." << endl;
+			return 0;
+		}
+		else
+		{
+			if (matriz[line][column] != 0)
+			{
+				switch (matriz[line][column])
+				{
+				case 1:
+					matrizmostra[line][column] = 1;
+					Vida -= 1; // Decremento na vida do jogador por posição acertada.
+					return 10; // Pontuação conseguida pelo tipo de embarcação acertada.
+				case 2:
+					matrizmostra[line][column] = 1;
+					Vida -= 1; // Decremento na vida do jogador por posição acertada.
+					return 5; // Pontuação conseguida pelo tipo de embarcação acertada.
+				case 3:
+					matrizmostra[line][column] = 1;
+					Vida -= 1; // Decremento na vida do jogador por posição acertada.
+					return 10; // Pontuação conseguida pelo tipo de embarcação acertada.
+				case 4:
+					matrizmostra[line][column] = 1;
+					Vida -= 1; // Decremento na vida do jogador por posição acertada.
+					return 15; // Pontuação conseguida pelo tipo de embarcação acertada.
+				case 5:
+					matrizmostra[line][column] = 1;
+					Vida -= 1; // Decremento na vida do jogador por posição acertada.
+					return 10; // Pontuação conseguida pelo tipo de embarcação acertada.
+				default:
+					break;
+				}
+			}
+		}
+		matrizmostra[line][column] = 2;
+		return 0;
+	}
+
+	int portaav(int line, int column, int valor) // Função para posicionamento do Porta-Aviões.
+	{
+		if (matriz[line][column] == 0 && matriz[line - 1][column] == 0 && matriz[line + 1][column + 1] == 0 && matriz[line + 1][column - 1] == 0) // Teste de verificação para espaços disponível para o porta-aviões
+		{
+			matriz[line][column] = valor;
+			matriz[line - 1][column] = valor;
+			matriz[line + 1][column + 1] = valor;
+			matriz[line + 1][column - 1] = valor;
+			Vida += 4; // Incremento na vida do jogador baseado na quantidade de posições que são ocupadas pela embarcação escolhida.
+			return 4; //Retorno de valor de posições ocupadas pela embarcação escolhida.
+		}
+		else
+		{
+			cout << endl << "Alguma posição que esta embarcação utilizaria ja está ocupada! Por favor digite outra posição" << endl;
+			return 0;
+		}
+
+	}
+
+	int submarino(int line, int column, int valor) // Função para posicionamento do Submarino.
+	{
+		if (matriz[line][column] == 0) // Verifica se a posição do tabuleiro está disponível
+		{
+			matriz[line][column] = valor;
+			Vida += 1; // Incremento na vida do jogador baseado na quantidade de posições que são ocupadas pela embarcação escolhida.
+			return 1;  //Retorno de valor de posições ocupadas pela embarcação escolhida.
+		}
+		else
+		{
+			cout << endl << "Alguma posição que esta embarcação utilizaria ja está ocupada! Por favor digite outra posição" << endl;
+			return 0;
+		}
+	}
+
+	int cruzador(int line, int column, int valor) // Função para posicionamento do Cruzador.
+	{
+		if (matriz[line][column] == 0 && matriz[line][column - 1] == 0)  // Teste de verificação para espaços disponível para o Cruzador.
+		{
+			matriz[line][column] = valor;
+			matriz[line][column - 1] = valor;
+			Vida += 2; // Incremento na vida do jogador baseado na quantidade de posições que são ocupadas pela embarcação escolhida.
+			return 2; //Retorno de valor de posições ocupadas pela embarcação escolhida.
+		}
+		else
+		{
+			cout << endl << "Alguma posição que esta embarcação utilizaria ja está ocupada! Por favor digite outra posição" << endl;
+			return 0;
+		}
+	}
+
+	int encouracado(int line, int column, int valor) // Função para posicionamento do Encouraçado.
+	{
+		if (matriz[line][column] == 0 && matriz[line][column - 1] == 0 && matriz[line][column + 1] == 0)   // Teste de verificação para espaços disponível para o Encouraçado.
+		{
+			matriz[line][column] = valor;
+			matriz[line][column + 1] = valor;
+			matriz[line][column - 1] = valor;
+			Vida += 3; // Incremento na vida do jogador baseado na quantidade de posições que são ocupadas pela embarcação escolhida.
+			return 3;  //Retorno de valor de posições ocupadas pela embarcação escolhida.
+		}
+		else
+		{
+			cout << endl << "Alguma posição que esta embarcação utilizaria ja está ocupada! Por favor digite outra posição" << endl;
+			return 0;
+		}
+	}
+
+	int hidroaviao(int line, int column, int valor) // Função para posicionamento do HidroAvião.
+	{
+		if (matriz[line][column] == 0 && matriz[line + 1][column + 1] == 0 && matriz[line + 1][column - 1] == 0)   // Teste de verificação para espaços disponível para o Hidroavião.
+		{
+			matriz[line][column] = valor;
+			matriz[line + 1][column + 1] = valor;
+			matriz[line + 1][column - 1] = valor;
+			return 3;  //Retorno de valor de posições ocupadas pela embarcação escolhida.
+		}
+		else
+		{
+			cout << endl << "Alguma posição que esta embarcação utilizaria ja está ocupada! Por favor digite outra posição" << endl;
+			return 0;
+		}
+	}
+
+};
+
+int main()
+{
+	setlocale(LC_ALL, "");
+
+	tabuleiro playerA, playerB;// Chamada dos jogadores.
+	int Linhas1, Colunas1, unidade, opcao, i, acerto;
+	char nomeA[50], nomeB[50]; // Nomes para jogadores.
+	cout << endl << "Qual o nome do jogador 1? ";
+	gets_s(nomeA);
+	cout << endl << "Qual o nome do jogador 2? ";
+	gets_s(nomeB);
+	system("cls");
+	cout << endl << "Jogador " << nomeA << " é sua vez de posicionar suas unidades!";
+	cout << endl << "Pressione enter para continuar.";
+	getchar();
+	system("cls");
+
+	do  //Posicionamento das embarcações do jogador A.
+	{
+		playerA.mostrematriz(nomeA);
+
+		cout << endl << "			 	UNIDADES:		";
+		cout << endl << "	01 = Porta-Aviões / 02 = Submarino / 03 = Cruzador ";
+		cout << endl << "	04 = Encouraçado / 05 Hidroavião / 00 = PARAR ";
+		cout << endl << endl << "Escolha uma embarcação: ";
+		cin >> unidade;
+
+		if (unidade < 0 || unidade > 5) // Laço de verificação para que opção escolhida seja válida.
+		{
+			do
+			{
+				cout << endl << "!!Digite um numero válido!!: ";
+				cin >> unidade;
+			} while (unidade < 0 || unidade > 5);
+		}
+
+		if (unidade != 0) // Coleta da posição que será inserida a embarcação.
+		{
+			do // Coleta do valor da linha.
+			{
+				cout << endl << "Digite uma linha(1-" << Tlinhas << "): ";
+				cin >> Linhas1;
+				if (Linhas1 < 1 || Linhas1 > Tlinhas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de linhas válido! >=[ ";
+				}
+			} while (Linhas1 < 1 || Linhas1 > Tlinhas);
+
+			do // Coleta do valor da coluna.
+			{
+				cout << endl << "Digite uma coluna(1-" << Tcolunas << "): ";
+				cin >> Colunas1;
+				if (Colunas1 < 1 || Colunas1 > Tcolunas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de colunas válido! >=[ ";
+				}
+			} while (Colunas1 < 1 || Colunas1 > Tcolunas);
+
+		}
+		Linhas1 -= 1;
+		Colunas1 -= 1;
+		system("cls");
+		switch (unidade)
+		{
+		case 1: //Porta-Aviões
+			if (playerA.limite > posmax - 4) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2) || Linhas1 < 1 || Linhas1 >(Tlinhas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerA.limite = (playerA.limite + playerA.portaav(Linhas1, Colunas1, unidade));
+			break;
+		case 2: //Submarino
+			playerA.limite = (playerA.limite + playerA.submarino(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 3: //Cruzador
+			if (playerA.limite > posmax - 2) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerA.limite = (playerA.limite + playerA.cruzador(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 4: //Encouraçado
+			if (playerA.limite > posmax - 3) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerA.limite = (playerA.limite + playerA.encouracado(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 5: //Hidroavião
+			if (playerA.limite > posmax - 3) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2) || Linhas1 > (Tlinhas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerA.limite = (playerA.limite + playerA.hidroaviao(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		default:
+			cout << endl << "Tem certeza que deseja parar de posicionar novas embarcações?(1 = Sim ; 2 = Não)" << endl;
+			if (playerA.limite >= posmin) // verifica se o minimo de posições ocupadas é o suficiente para continuar o processo de parar de posicionar nova unidades.
+			{
+				do // Teste de digito válido da opcao.
+				{
+					cin >> opcao;
+					if (opcao == 1)
+					{
+						playerA.limite = posmax; // Troca de valor para sair do laço "do-while" principal(posicionamento de novas unidades)
+					}
+					else
+					{
+						if (opcao != 2)
+						{
+							system("cls");
+							cout << endl << "Digite 1 ou 2    >=[" << endl;
+							cout << endl << "Tem certeza que deseja parar de posicionar novas embarcações?(1 = Sim ; 2 = Não)" << endl;
+						}
+					}
+				} while (opcao < 1 || opcao > 2);
+			}
+			else
+			{
+				cout << endl << endl << "!!!!! Mínimo de embarcações ainda não alcançado!!!!!" << endl << endl;
+			}
+			break;
+		}
+	} while (playerA.limite < posmax);
+
+	system("cls");
+	cout << endl << "  # = Água; O = Embarcação; X = Erro; @ = Acerto" << endl;
+	playerA.mostrematriz(nomeA);
+	cout << endl << "Voce terminou de posicionar suas embarcações!!";
+	cout << endl << "Pressione Enter para continuar.";
+	getchar();
+	getchar();
+	system("cls");
+	cout << endl << "Jogador " << nomeB << " é sua vez de posicionar suas unidades!";
+	cout << endl << "Pressione enter para continuar.";
+	getchar();
+	system("cls");
+
+	do  //Posicionamento das embarcações do jogador B.
+	{
+		playerB.mostrematriz(nomeB);
+
+		cout << endl << "			 	UNIDADES:		";
+		cout << endl << "	01 = Porta-Aviões / 02 = Submarino / 03 = Cruzador ";
+		cout << endl << "	04 = Encouraçado / 05 Hidroavião / 00 = PARAR ";
+		cout << endl << endl << "Escolha uma embarcação: ";
+		cin >> unidade;
+
+		if (unidade < 0 || unidade > 5)
+		{
+			do
+			{
+				cout << endl << "!!Digite um numero válido!!: ";
+				cin >> unidade;
+			} while (unidade < 0 || unidade > 5);
+		}
+
+		if (unidade != 0) // Coleta da posição que será inserida a embarcação.
+		{
+			do // Coleta do valor da linha.
+			{
+				cout << endl << "Digite uma linha(1-" << Tlinhas << "): ";
+				cin >> Linhas1;
+				if (Linhas1 < 1 || Linhas1 > Tlinhas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de linhas válido! >=[ ";
+				}
+			} while (Linhas1 < 1 || Linhas1 > Tlinhas);
+
+			do // Coleta do valor da coluna.
+			{
+				cout << endl << "Digite uma coluna(1-" << Tcolunas << "): ";
+				cin >> Colunas1;
+				if (Colunas1 < 1 || Colunas1 > Tcolunas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de colunas válido! >=[ ";
+				}
+			} while (Colunas1 < 1 || Colunas1 > Tcolunas);
+
+		}
+		Linhas1 -= 1;
+		Colunas1 -= 1;
+		system("cls");
+		switch (unidade)
+		{
+		case 1: //Porta-Aviões
+			if (playerB.limite > posmax - 4) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2) || Linhas1 < 1 || Linhas1 >(Tlinhas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerB.limite = (playerB.limite + playerB.portaav(Linhas1, Colunas1, unidade));
+			break;
+		case 2: //Submarino
+			playerB.limite = (playerB.limite + playerB.submarino(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 3: //Cruzador
+			if (playerB.limite > posmax - 2) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerB.limite = (playerB.limite + playerB.cruzador(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 4: //Encouraçado
+			if (playerB.limite > posmax - 3) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerB.limite = (playerB.limite + playerB.encouracado(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		case 5: //Hidroavião
+			if (playerB.limite > posmax - 3) //Teste para que posicionamento máximo não seja excedido.
+			{
+				cout << endl << "Escolha impossivel! Número de posições seria excedida! " << endl;
+				break;
+			}
+			if (Colunas1 < 1 || Colunas1 >(Tcolunas - 2) || Linhas1 > (Tlinhas - 2)) //Teste para que posicionamento seja totalmente dentro do tabuleiro.
+			{
+				cout << endl << "Posição inválida, parte da embarcação ficaria fora do tabuleiro! " << endl;
+				break;
+			}
+			playerB.limite = (playerB.limite + playerB.hidroaviao(Linhas1, Colunas1, unidade)); // Incremento na contagem de posições ocupadas do tabuleiro.
+			break;
+		default:
+			cout << endl << "Tem certeza que deseja parar de posicionar novas embarcações?(1 = Sim ; 2 = Não)" << endl;
+			if (playerB.limite >= posmin) // verifica se o minimo de posições ocupadas é o suficiente para continuar o processo de parar de posicionar nova unidades.
+			{
+				do // Teste de digito válido da opcao.
+				{
+					cin >> opcao;
+					if (opcao == 1)
+					{
+						playerB.limite = posmax; // Troca de valor para sair do laço "do-while" principal(posicionamento de novas unidades).
+					}
+					else
+					{
+						if (opcao != 2)
+						{
+							system("cls");
+							cout << endl << "Digite 1 ou 2    >=[" << endl;
+							cout << endl << "Tem certeza que deseja parar de posicionar novas embarcações?(1 = Sim ; 2 = Não)" << endl;
+						}
+					}
+				} while (opcao < 1 || opcao > 2);
+			}
+			else
+			{
+				cout << endl << endl << "!!!!! Mínimo de embarcações ainda não alcançado!!!!!" << endl << endl;
+			}
+			break;
+		}
+	} while (playerB.limite < posmax);
+
+	system("cls");
+	cout << endl << "  # = Água; O = Embarcação; X = Erro; @ = Acerto" << endl;
+	playerB.mostrematriz(nomeB);
+	cout << endl << "Voce terminou de posicionar suas embarcações!!";
+	cout << endl << "Pressione Enter para continuar.";
+	getchar();
+	system("cls");
+
+	do // Etapa de disparos para ambos os jogadores;
+	{
+		i = 3;
+		cout << endl << "Hora do jogardor " << nomeA << "!! É sua vez de disparar!";
+		cout << endl << "Pressione Enter para continuar.";
+		getchar();
+		getchar();
+		do
+		{
+			system("cls");
+			playerB.mostramatrizvisivel(nomeA, i);
+			cout << endl << "Pontuação do jogador " << nomeA << ": " << playerA.pontos;
+			cout << endl << "Vida do jogador " << nomeB << " restante: " << playerB.Vida << endl;
+			do // Coleta do valor da linha.
+			{
+				cout << endl << "Digite uma linha para atacar!(1-" << Tlinhas << "): ";
+				cin >> Linhas1;
+				if (Linhas1 < 1 || Linhas1 > Tlinhas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de linhas válido! >=[ ";
+				}
+			} while (Linhas1 < 1 || Linhas1 > Tlinhas);
+
+			do // Coleta do valor da coluna.
+			{
+				cout << endl << "Digite uma coluna para atacar!(1-" << Tcolunas << "): ";
+				cin >> Colunas1;
+				if (Colunas1 < 1 || Colunas1 > Tcolunas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de colunas válido! >=[ ";
+				}
+			} while (Colunas1 < 1 || Colunas1 > Tcolunas);
+
+			Linhas1 -= 1;
+			Colunas1 -= 1;
+			acerto = playerB.tiro(Linhas1, Colunas1);
+			playerA.pontos += acerto;
+
+			i--;
+		} while (i > 0 && playerA.Vida > 0 && playerB.Vida > 0);
+
+		if (playerA.Vida < 1 || playerB.Vida < 1) // Teste para verificar se o jogo terminou antes do jogador B poder jogar.
+		{
+			i = 0;
+		}
+		else
+		{
+			i = 3;
+			system("cls");
+			playerB.mostramatrizvisivel(nomeA, 0);
+			cout << endl << "Pontuação do jogador " << nomeA << ": " << playerA.pontos;
+			cout << endl << "Vida do jogador " << nomeB << " restante: " << playerB.Vida << endl;
+			cout << endl << "Hora do jogardor " << nomeB << "!! É sua vez de disparar!";
+			cout << endl << "Pressione Enter para continuar.";
+			getchar();
+			getchar();
+			system("cls");
+		}
+
+		while (i > 0)
+		{
+			system("cls");
+			playerA.mostramatrizvisivel(nomeB, i);
+			cout << endl << "Pontuação do jogador " << nomeB << ": " << playerB.pontos;
+			cout << endl << "Vida do jogador " << nomeA << " restante: " << playerA.Vida << endl;
+			do // Coleta do valor da linha.
+			{
+				cout << endl << "Digite uma linha para atacar!(1-" << Tlinhas << "): ";
+				cin >> Linhas1;
+				if (Linhas1 < 1 || Linhas1 > Tlinhas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de linhas válido! >=[ ";
+				}
+			} while (Linhas1 < 1 || Linhas1 > Tlinhas);
+
+			do // Coleta do valor da coluna.
+			{
+				cout << endl << "Digite uma coluna para atacar!(1-" << Tcolunas << "): ";
+				cin >> Colunas1;
+				if (Colunas1 < 1 || Colunas1 > Tcolunas) // Teste para que valor da coluna seja um valor válido.
+				{
+					cout << "Digite um número de colunas válido! >=[ ";
+				}
+			} while (Colunas1 < 1 || Colunas1 > Tcolunas);
+
+			Linhas1 -= 1;
+			Colunas1 -= 1;
+			acerto = playerA.tiro(Linhas1, Colunas1);
+			playerB.pontos = playerB.pontos + acerto;
+
+			i--;
+		}
+		if (playerB.Vida > 0 && playerA.Vida > 0)
+		{
+			system("cls");
+			playerA.mostramatrizvisivel(nomeB, i);
+			cout << endl << "Pontuação do jogador " << nomeB << ": " << playerB.pontos;
+			cout << endl << "Vida do jogador " << nomeA << " restante: " << playerA.Vida << endl;
+			getchar();
+		}
+
+
+	} while (playerA.Vida > 0 && playerB.Vida > 0);
+
+
+	if (playerA.Vida == 0) // Verificação para quando o jogadorB for o vencedor
+	{
+		system("cls");
+		cout << endl << "---FIM DE JOGO---";
+		cout << endl << "O vencedor é o jogador " << nomeB << "!!!!!!!";
+		cout << endl << "Pontuação: " << playerB.pontos;
+		cout << endl << "-----------------";
+		getchar();
+		getchar();
+	}
+	else
+	{
+		if (playerB.Vida == 0) //Verificação para quando o jogadorA for o vencedor
+		{
+			system("cls");
+			cout << endl << "---FIM DE JOGO---";
+			cout << endl << "O vencedor é o jogador " << nomeA << "!!!!!!!";
+			cout << endl << "Pontuação: " << playerA.pontos;
+			cout << endl << "-----------------";
+			getchar();
+			getchar();
+		}
+	}
+
+}
