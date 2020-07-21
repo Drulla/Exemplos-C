@@ -1,0 +1,110 @@
+#include<stdlib.h> 
+#include<stdio.h> 
+#include<locale.h> // Biblioteca necessária para imprimir na tela letras acentuadas; 
+  
+int linha() //Sub-rotina com função de imprimir uma linha na tela; 
+{ 
+ 	return 0; 
+} int main() {  	int col = 0, lin = 0; //manipulação da matriz  	int matriz1[5][5], matriz2[5][5], vetor[5];  	printf("Manipulação de matrizes RU do Aluno: 1362115\n"); 
+ 	setlocale(LC_ALL, "portugues"); 
+ while (lin <= 0 || lin > 5) // Laço de leitura de número de linhas pertencente as matrizes 
+ 	{ 
+ 	 	printf("\nDigite o número de linhas da matriz: ");//mensagem para o usuario 
+ 	 	scanf_s("%d", &lin); 
+ 	 	if (lin <= 0 || lin > 5) 
+ 	 	{ 
+ 	 	 	system("cls"); 
+ 	 	 	printf("\nOs numeros tem que ser de 1 a 5!\n"); 
+ 	 	} 
+ 	} 
+ 	while (col <= 0 || col > 5) // Laço de leitura das colunas da matriz 
+ 	{ 
+ 	 	printf("\nDigite o número de colunas: "); 
+  scanf_s("%d", &col);   if (col <= 0 || col > 5) 
+ 	 	{ 
+ 	 	 	system("cls");// limpa tela 
+ 	 	 	printf("\nPor favor digite um número de colunas entre 1 e 5!!\n");  
+ 	 	} 
+} system("cls"); 
+ 	printf("\nMatriz definida por usuário: %dx%d\n\n", lin, col);  	for (int m = 0; m < lin; m++) //Laço de linha;  
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) //Laço de coluna; 
+ 	 	{ 
+ 	 	 	printf("Digite o valor da posição %dx%d da matriz 01: ", m + 1, n 
++ 1); 
+ 	 	 	scanf_s("%d", &matriz1[m][n]); 
+ 	 	} 
+ 	} 
+ 	system("cls"); 
+ 	for (int m = 0; m < lin; m++) //Laço de leitura semelhante ao anterior porém para matriz de número 02. 
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) 
+ 	 	{ 
+ 	 	 	printf("Digite o valor da posição %dx%d da matriz 02: ", m + 1, n 
++ 1); 
+ 	 	 	scanf_s("%d", &matriz2[m][n]); 
+ 	 	} 
+ 	} 
+ 	system("cls"); 
+ 	linha(); 
+ 	printf(" Matriz 01:\n"); //Impressão da matriz 01 na tela utilizando um laço   	linha(); 
+ 	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) 
+ 	 	{ 
+ 	 	 	printf(" %d", matriz1[m][n]); 
+ 	 	} 
+ 	 	printf("\n"); 
+ 	} 
+ 	linha(); 
+ 	printf("\n Matriz 02:\n"); //Impressão da matriz 02 na tela utilizando um laço 6  	linha(); 
+ 	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) 
+ 	 	{ 
+ 	 	 	printf(" %d", matriz2[m][n]); 
+ 	 	} 
+ 	 	printf("\n"); 
+ 	} 
+ 	linha(); 
+ 	printf(" Matriz resultante da soma de Matriz 01 e Matriz 02: \n"); //Impressão da matriz resultante da soma ads anteriores + cálculo necessário utilizando um laço   	linha(); 
+ 	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) 
+ 	 	{ 
+ 	 	 	printf(" %d", matriz1[m][n] + matriz2[m][n]); //Cálculo da soma das matrizes. 
+ 	 	} 
+ 	 	printf("\n"); 
+ 	} 
+ 	linha(); 
+ 	printf("Dados multiplicado pelo final do RU 15.\n");  
+ 	linha(); 
+ 	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	for (int n = 0; n < col; n++) 
+ 	 	{ 
+   printf(" %d", (matriz1[m][n] + matriz2[m][n]) * 15); //Cálculo da multiplicação dos valores da matriz resultante. 
+ 	 	} 
+ 	 	printf("\n"); 
+ 	} 
+ 	linha(); 
+ 	printf("\nVetor resultante da diagonal principal de Matriz 01: \n");   	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	printf(" %d", (matriz1[m][m])); 
+ 	} 
+ 	printf("\nVetor resultante da diagonal principal de Matriz 02: \n");   	for (int m = 0; m < lin; m++) 
+ 	{ 
+ 	 	printf(" %d", (matriz2[m][m])); 
+ 	} 
+ for (int i = 0; i < lin; i++) //Atribuição dos cálculos requisitados em um vetor com os resultados. 
+ 	{ 
+ 	 	vetor[i] = ((matriz1[i][i] + matriz2[i][i]) * 15); 
+ 	} 
+ printf("\nVetor resultante da soma das diagonais principais multiplicadas por 15 das Matrizes: \n");//Impressão dos valores do vetor resultante multiplicados por 09. Linhas 114-118 
+ 	for (int i = 0; i < lin; i++) 
+ 	{ 
+ 	 	printf(" %d", vetor[i]); 
+ 	} 
+ 	printf("\n");  	system("pause");  	return 0; 
+} 
+ 
