@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define TAMANHOFILA 200
+
+int stack[TAMANHOFILA] = { -1 }; //array para conter a pilha preenchido com -1 para a indicar posiçao vazia
+int finalfila; //inteiro para inserção de dado
+int iniciofila;	//inteiro para retirada de dado
+
+//protótipos 
+void push(int);
+int pop();
+void listar();
+
+int main() {
+
+	int opcao = 1, num, c = 0;
+
+	while (opcao == 1) {
+		printf("MAIN MENU: \n");
+		printf("1.Adicionar elemento.\n");
+		printf("2.Remover elemento.\n");
+		printf("Sua escolha: ");
+
+		scanf_s("%d", &opcao);
+		//sempre limpe o buffer do teclado.
+		while ((c = getchar()) != '\n' && c != EOF) {}
+
+		switch (opcao) {
+		case 1:
+			printf("Digite o elemento... ");
+			scanf_s("%d", &num);
+			//sempre limpe o buffer do teclado.
+			while ((c = getchar()) != '\n' && c != EOF) {}
+			//colocando o elemento na fila
+			push(num);
+			//vamos listar a pilha so para testes
+			listar();
+			break;
+		case 2:
+			//buscando o valor no topo da pilha
+			printf("O valor no inicio da fila: %d\n", pop());
+			//vamos listar a pilha so para testes
+			listar();
+			break;
+		default:
+			printf("ESCOLHA INVALIDA...");
+		}
+
+		printf("\nDeseja fazer novas operacoes na fila (1 para sim, 2 para nao)?\n");
+		scanf_s("%d", &opcao);
+		//sempre limpe o buffer do teclado.
+		while ((c = getchar()) != '\n' && c != EOF) {}
+
+		//vamos limpar a tela a cada operaçao
+		system("cls");
+	}
+
+	system("Pause");
+	return 0;
+}
+
+//funçao push, coloca um elemento na pilha
+void push(int y) {
+
+	if (finalfila > TAMANHOFILA) {
+		printf("Fila Cheia");
+		return;
+	}
+	else {
+		stack[finalfila] = y;
+		finalfila++;
+	}
+
+}
+//funçao pop, retira um elemento da pilha
+int pop() {
+	int a;
+	if (iniciofila <= -1) {
+		printf("FILA VAZIA");
+		return 0;
+	}
+	else {
+		iniciofila++;
+		a = stack[iniciofila];
+		stack[iniciofila];
+	}
+	return(a);
+}
+
+void listar() {
+	printf("A fila atual:\n");
+	for (int i = (iniciofila); i < finalfila ; i++) {
+		if (stack[i] <= 0) {
+			break;
+		}
+		printf("%d  ", stack[i]);
+	}
+
+}
