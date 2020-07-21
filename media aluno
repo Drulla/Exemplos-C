@@ -1,0 +1,63 @@
+#include <stdio.h> //inclusão da biblioteca standard de entrada e saída 
+#include <stdlib.h> //inclusão da biblioteca standard de entrada e saída 
+#include <locale.h> //inclusão de biblioteca para interpretar caracteres diferenciados  
+//declaração de parametros que serão recebidos pela função 
+float calcula_nota_dos_alunos(float apol[5], float prova_objetiva, float  	prova_dicursiva, float atividade_pratica, float calculo_aprovacao) 
+{ 
+ 	int i;//contador 
+ float soma_notas_apol, nota_final; //declara flutuantes  soma_notas_apol = 0, nota_final = 0;//zera os valores por causa de lixo de mémoria  for (i = 0; i < 5; i++) //loop para percorrer e somar nota armazenada no vetor apol[] 
+ 	{ 
+ 	 	soma_notas_apol = soma_notas_apol + apol[i]; 
+ 	} 
+ 	//realização do cálculo da nota e armazenamento do valor 
+ 	calculo_aprovacao = (((soma_notas_apol / 5) * 20) + (prova_objetiva  	 	* 30) + (prova_dicursiva * 30) + (atividade_pratica * 20)) / 100;  	printf("\nStatus da aprovação");//mensagem ao usuário  	//lógica para calcular a nota das materias  	if (calculo_aprovacao < 30) 
+ 	{ 
+ 	 	printf("\n\nEsse aluno está reprovado! \n\nNota média: %.2f\n\n", 
+ 	 	 	calculo_aprovacao);//retorna nota e média calculada 
+ 	 	return 0; 
+ 
+ 	} 
+ 	else if (calculo_aprovacao < 70) 
+ 	{ 
+ 	 	printf("\n\nEsse aluno está em exame. \n\nNota média: %.2f\n\n", calculo_aprovacao);//retorna nota e média calculada 
+ 	 	return 2; 
+ 	} 
+ 	else 
+ 	{ 
+ 	 	printf("\n\nEsse aluno está Aprovado. \n\nNota média: %.2f\n\n", calculo_aprovacao);//retorna nota e média calculada 
+ 	 	return 1; 
+ 	} 
+}; 
+ 
+//código principal int main() { 
+ setlocale(LC_ALL, "Portuguese");//aplica conjunto de caracteres com acento utilizados em português 
+  //declara o vetor par as notas e demais variáveis necessárias ao cálculo da média do aluno 
+ float apol[5], soma_notas_apol, prova_objetiva, prova_dicursiva,   atividade_pratica, calculo_aprovacao, resultado; 
+ 	int i; 
+ 
+ 
+ //zera os valores por causa de lixo na memória  soma_notas_apol = 0, prova_objetiva = 0, prova_dicursiva = 0, 
+ 	 	atividade_pratica = 0, i = 0; 
+ 	//mensagem ao usuário 
+ printf("Programa para calcular a nota de Alunos. \nMostrar status de aprovado, reprovado ou recuperação"); 
+ 	printf("\n\nEntre com as notas das APOLs: \n\n"); 
+ 	//aquisição das notas da apols 
+ 	for (i = 0; i < 6; i++) 
+ 	{ 
+ 	 	printf("Entre com a nota da %d° APOL:", i + 1); 
+ 	 	scanf_s("%f", &apol[i]);// direcionamento para o vetor 
+ 	} 
+ 	printf("\nnotas entradas:");  	//impressão na tela das notas entradas 
+ 	for (i = 0; i < 6; i++) 
+ 	{ 
+ 	 	soma_notas_apol = soma_notas_apol + apol[i];  	 	printf("\n %i° nota %.2f: ", i + 1, apol[i]); 
+ 
+ 	} 
+ 	//mensagem para entrada de dados 
+ printf("\nEntre com a nota da prova objetiva:");  scanf_s("%f", &prova_objetiva);  //mensagem para entrada de dados 
+ printf("\nEntre com a nota da prova discursiva:");  scanf_s("%f", &prova_dicursiva);  //mensagem para entrada de dados 
+ printf("\nEntre com a nota da atividade prática:");  scanf_s("%f", &atividade_pratica); 
+ 	printf("\npassagem de parâmetros para a função:\n"); 
+ 	//chama função, por passagem de parametro, para calcular as notas do aluno  	resultado = calcula_nota_dos_alunos(apol, prova_objetiva, prova_dicursiva, atividade_pratica, calculo_aprovacao); 
+ 	return 0; 
+} 
