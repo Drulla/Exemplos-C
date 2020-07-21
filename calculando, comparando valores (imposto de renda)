@@ -1,0 +1,43 @@
+#include<stdio.h> // biblioteca padrão de entrada e saida 
+#include<stdlib.h> // entrada e saida 
+#include<locale.h>//caracteres especiais, pontos flutuantes 
+ 
+   int main() { 
+1
+ 	setlocale(LC_ALL, "Portuguese");  	float salario, imposto_devido; 
+ 	//int RU = 2115; // ultimos 4 numeros do RU 
+ 
+ 	printf_s("Coloque aqui o valor de seu salário: \n");// mensagem inicial que solicita o salário 
+ 	scanf_s("%f", &salario); // le valor digitado e (&) direciona para o valor da variavel  
+ 	if (salario <= 1903.98) //compara os valores conforme dados da tabela (<= menor igual) 
+ 	{ 
+ 	 	printf_s("\nNao e necessario pagamento de imposto de renda.\n\n"); //Caso a condição for menor que p valor 
+ 	 	system("pause"); 
+ 
+ 	} 
+ else if (salario <= 2826.95) {   printf_s("Voce pagara um imposto de renda de 7,5%% sobre o seu salário");   printf_s("\nsalario: %.2f, \nAliquota de imposto: %.1f%%, \nValor devido de imposto: R$%.2f", salario, 7.5, salario*0.075 - 142.8); // imposto devido   imposto_devido = salario * 0.075 - 142.8;// calculo do imposto   printf_s("\nParcela  a  deduzir  do  cálculo  de  IRPF,  em  reais: R$142, 80");// mensagem da tabela 
+  printf_s("\n\nVocê  receberá  como  salário:  R$%.2f\n\n", salario - imposto_devido);//valor de recebimento 
+ 
+ 	} 
+ 	else if (salario <= 3751.05)//análise  se  o  valor  é  igual  ou  menor 
+ 	{ 
+ 	 	printf_s("Voce pagara um imposto de renda de 15% sobre o seu salário");  	 	printf_s("\nsalario: %.2f, \nAliquota de imposto: %.1f%%, \nValor devido 
+de imposto: R$%.2\n", salario, 15.0, salario*0.015 - 354.80); // imposto devido   imposto_devido = salario * 0.015 - 354.80;// calculo do imposto   printf_s("Parcela  a  deduzir  do  cálculo  de  IRPF,  em  reais: R$354, 
+80");// mensagem da tabela 
+  printf_s("\n\nVocê  receberá  como  salário:  R$%.2f\n\n", salario - imposto_devido);//valor de recebimento 
+ 
+ 	} 
+ else if (salario <= 4664.68) {   printf_s("Voce pagara um imposto de renda de 22.5% sobre o seu salário");   printf_s("\nsalario: %.2f, \nAliquota de imposto: %.1f%%, \nValor devido de imposto: R$%.2\n", salario, 22.5, salario*0.225 - 636.13); // imposto devido   imposto_devido = salario * 0.225 - 636.13;// calculo do imposto   printf_s("Parcela  a  deduzir  do  cálculo  de  IRPF,  em  reais: R$354, 
+80");// mensagem da tabela 
+  printf_s("\n\nVocê  receberá  como  salário:  R$%.2f\n\n", salario - imposto_devido);//valor de recebimento 
+ 
+ 	} 
+ 	else { 
+  printf_s("Voce pagara um imposto de renda de 27.5% sobre o seu salário");   printf_s("\nsalario: %.2f, \nAliquota de imposto: %.1f%%, \nValor devido de imposto: R$%.2\n", salario, 27.5, salario*0.275 - 869.36); // imposto devido   imposto_devido = salario * 0.275 - 636.13;// calculo do imposto   printf_s("Parcela  a  deduzir  do  cálculo  de  IRPF,  em  reais: R$869,36");// mensagem da tabela 
+  printf_s("\n\nVocê  receberá  como  salário:  R$%.2f\n\n", salario - imposto_devido);//valor de recebimento 
+ 	} 
+ 
+system("pause"); 
+ 	return 0; 
+} 
+ 
