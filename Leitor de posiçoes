@@ -1,0 +1,75 @@
+#include"pch.h" 
+#include <iostream> 
+  
+int main() 
+{ 
+  
+ 	int vetor[100], vetor_par[100], vetor_impar[100], contador, i, j, k;  	i = 0, j = 0, k = 0; 
+ printf("\n\nprograma  para  somar  valores  memorizados.\n\nSera  se parado valores pares de valores impares\n");  //mensagem solicitando ação do usuário  
+ 	printf("\n\nEntre com o numero de valores que voce  quer memorizar: \n"); 
+ 
+ scanf_s("%i", &contador);//aquisita  o  valo r  digitado,  como  in teiro,  e direciona para o vetor na posição disponível 
+ 	if (contador == 0)//recusa entrada como zero  
+ 	{ 
+  printf("O  valor  precisa  ser  maior  que  zero!!!"); //mensage m  de  erro  de entrada 
+ 	} 
+ else if (contador > 100) //caos contador seja maior que o esperado, também apresenta mensagem de erro 
+ 	{ 
+ 	 	printf("O valor precisa ser inferior a 100!");//mensagem ao usuário  
+ 	} 
+ 	else 
+ {//caso as condiçõe s se jam atendidas, entr a na  aquisição e tratamento  do s dados abaixo 
+ 
+ 	 	for (i = 0; i < contador; i++)//inicia o contador para armazenar os valores de forma organizada 
+ 	 	{ 
+   printf("entre com o %d valor:", i + 1);//pe de a aquisição de dados  para o usuário 
+   scanf_s("%i", &vetor[i]);//direciona o valor inte iro digitado  para a posição do vetor 
+ 	 	 	 	//compara se a divisão do valor entrado por 2 tem como resultado final zero(que é par) ou se é ímpar 
+ 	 	 	if (vetor[i] % 2 == 0) 
+ 	 	 	{ 
+ 	 	 	 	vetor_par[j] = vetor[i];//armazena os dados no vetor par  
+j	= j + 1;//incrementa  o  contador  para  não  rees crever  no  mesmo endereço de memória 
+ 	 	 	} 
+ 	 	 	else 
+ 	 	 	{//caso não seja par, é ímpar  
+    vetor_impar[k] = vetor[i];//  armazena  o  valor  no  vetor  impar, de forma sequencial 
+k	= k + 1;//incrementa  o  contador  para  não  rees crever  no  mesmo endereço de memória 
+ 	 	 	}; 
+ 	 	}; 
+ 	 	printf("\nNumero  do  RU=  1362115  dois  ultimos  numeros  do  RU: 15 
+\n\n");//solicitado no exercicio  
+ 	 	if (j > 0)//caso tenha valores pares, serão impressos abaixo  
+ 	 	{ 
+ 	 	 	printf("\n\nimprimindo vetores pares:\n");//mensagem para o usuário  
+ 	 	 	for (i = 0; i < j; i++)//percorre os valores do vetor par  
+	 	 	{ 
+	 	 	 	printf("%d  vetor  par:   %d \n", i + 1, 
+vetor_par[i]);//imprime os valores armazenados no vetor 
+ 	 	 	} 
+ 	 	} 
+ 	 	else 
+ 	 	{ 
+ 	 	 	printf("\n\nnao  ha  valores  pares  para  serem  exibidos 
+\n");//caso não tenha valores, será exibido essa mensagem 
+ 	 	} 
+ 	 	if (k > 0) 
+ 	 	{   //mensagem ao usuário  
+ 
+   printf("\nimprimindo  vetores  impares,  multiplicados  pelos  2  ulitmos numeros do RU:15\n"); 
+ 	 	 	for (i = 0; i < k; i++)//percorre os valores do vetor ímpar  
+ 	 	 	{ 
+ 	 	 	 	printf("%d vetor impar: %d \n", i + 1, vetor_impar[i] * 
+15);//imprime o valor do vetor após multiplicá - lo por 88 
+ 	 	 	} 
+ 	 	} 
+ 	 	else 
+ 	 	{ 
+ 	 	 	printf("\nNao  ha  valores  impares  para  serem  exibidos! 
+\n\n");//caso não tenha dados ímpares, ´será exibido essa mensagem 
+ 	 	} 
+ 
+ 	} 
+ 	return 0; 
+ 
+ 
+} 
