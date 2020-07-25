@@ -1,0 +1,28 @@
+
+#include<stdio.h>
+
+// Estrutura de repetição while
+// Utilizado quado n existe numero fixo de elementos, mas tenha um cirterio de parada, antes de inciar o loop a condição é checada
+
+int main (){
+
+	int numero;
+	int soma=0;
+
+	printf("Informe  um numero: ");
+	fflush(stdout);
+	scanf("%d",& numero);
+
+	while(numero !=0){
+
+		soma= soma+numero;
+		printf("Informe outro numero:");
+		fflush(stdout);
+		scanf("%d", & numero);
+
+	}
+
+	printf ("A soma é %d", soma);
+
+	return 0;
+}
