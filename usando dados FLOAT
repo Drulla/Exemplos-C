@@ -1,0 +1,28 @@
+
+#include<stdio.h>
+//Tipos de dados.
+
+//tipos numericos, -inteiros, - reais
+
+int main(){
+
+	float nota1, nota2;
+	float media;
+	//double outra_media; // suporta quantidade maior de dados que o float, dependendo dos casos
+
+	printf ("Qual a sua primeira nota? ");
+	fflush(stdout);
+	scanf("%f",& nota1 );
+
+	printf ("Qual a sua segunda nota? ");
+	fflush(stdout);
+	scanf("%f",& nota2 );
+
+	media = ((nota1 + nota2 )/2);
+
+	printf("Sua média é: %.2f", media);
+
+
+	return 0;
+
+}
