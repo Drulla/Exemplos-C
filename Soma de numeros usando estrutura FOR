@@ -1,0 +1,26 @@
+
+#include<stdio.h>
+//Estruturas de repetição, for, 	while, 		do while
+//							para,  enquanto, faça...enquanto
+
+// programa que recebe 5 numeros e apresente a soma deles no final (utilizando FOR)
+int main(){
+
+	int numero;
+	int soma=0;
+
+	for (int i =0; i < 5; i++){
+	// para int i =0; enquanto i ,5;incrementa o i em 1
+
+		printf("Informe um numero: ");
+		fflush(stdout);
+		scanf("%d", &numero);
+
+
+		soma = soma + numero;
+	}
+
+	printf("A soma é %d", soma);
+
+	return 0;
+}
