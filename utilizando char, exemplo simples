@@ -1,0 +1,35 @@
+
+#include<stdio.h>
+//Tipos de dados
+// Tipos alfanumericos, -Caracteres, - Strings
+// Em C não existe strings (tudo que tiver em "asdssdsd")
+// 					caracteres ('adsd')
+
+int main(){
+
+	char opcao;
+
+	printf("Informe uma opção: \n");
+	printf ("a - Saldo da conta\n");
+	printf ("b - Extrato\n");
+	printf ("c - Limite\n");
+	fflush(stdout);
+	scanf("%c", &opcao);
+
+	if(opcao=='a'){
+		printf("Seu saldo é...");
+
+	}
+	else if(opcao=='b'){
+		printf("Seu extrato é...");
+
+	}
+	else if (opcao =='c'){
+		printf("Seu extrato é...");
+	}
+	else {
+		printf("Opção desconhecida;...");
+	}
+
+	return 0;
+}
