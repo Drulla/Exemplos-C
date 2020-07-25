@@ -1,0 +1,26 @@
+
+#include <stdio.h>
+//Estrutura de repetição do while (faça enquanto...)
+
+int main(){
+
+	int numero;
+	int soma=0;
+
+
+
+	do{
+
+		printf("Escreva um numero:");
+		fflush (stdout);
+		scanf("%d", &numero);
+
+		soma =soma + numero;
+
+	} while  (numero !=0);
+
+	printf("A soma dos numeros é %d", soma);
+
+
+	return 0;
+}
