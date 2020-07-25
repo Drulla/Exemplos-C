@@ -1,0 +1,17 @@
+
+#include<stdio.h>
+
+// programa alfanumericos
+
+int main(){
+
+	char nome[50];
+
+
+	printf("Qual é o seu nome:");
+	fflush(stdout);
+	gets (nome);
+	printf("Seu nome é %s", nome);
+
+	return 0;
+}
