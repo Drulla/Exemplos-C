@@ -1,0 +1,19 @@
+
+#include <stdio.h>
+// tipos de dados : booleandos ( Verdairp/falso) (true/false)
+// a linguagem C reconhece o valor 0 como falso, e qualquer valor diferente de 0 como verdadeiro (true)
+
+int main(){
+
+	int booleano = 0;
+
+	if(booleano){
+		printf("Verdadeiro");
+	}
+	else {
+		printf("falso");
+	}
+
+	return 0;
+
+}
