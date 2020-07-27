@@ -1,0 +1,29 @@
+#include<stdio.h>
+// manipulando entrada e saidas
+
+int main(){
+
+	FILE *arq;
+	char c;
+	// fopen (nome-do-arquivo, forma-de-abertura-do-arquivo)
+	// 'w' -  abrir o arquivo para escrita (se o arquivo ja existir, sera sobrescrito com um novo)
+	// 'r' - abrir o arquivo para leitura
+	//'wa' - abrir o arquivo para adição de conteudo
+	arq = fopen("arquivo.txt", "r");
+
+	if(arq){
+		while((c=getc(arq))!= EOF){ // EOF =End Of FIle (fim do arquivo)
+			printf("%c",c);
+		}
+	}
+	else{
+		printf("Não achei o arquivo");
+	}
+
+
+
+	//finalizando a manipulação do arquivo deve ser fechado.
+	fclose(arq);
+
+	return 0;
+}
