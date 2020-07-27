@@ -1,0 +1,28 @@
+#include <stdio.h>
+// main -> principal
+
+
+void mensagem(){
+	printf("Bem-vindo");
+}
+
+int soma(int num1, int num2){
+	int res =num1 + num2;
+	return res;
+}
+
+void proximo_char(char caractere){
+	printf("%c", caractere+1);
+}
+
+int main(){
+
+	mensagem();
+	int retorno= soma(4,60);
+	printf("\nRetorno =%d\n", retorno);
+
+	char cara = 'a';
+	proximo_char(cara);
+
+	return 0;
+}
