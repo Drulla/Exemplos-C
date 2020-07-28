@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+//malloc
+int main(){
+
+	int qtd, *p;
+	printf("Informa a quantidade de elementos para o vetor: ");
+	fflush(stdout);
+	scanf("%d", &qtd);
+
+	int bytes = qtd * sizeof(int);
+
+	p = (int*)malloc(bytes);
+
+	for(int i=0; i<qtd;i++){
+		printf("Informe o valor para a posição %d do vertor " , (i+1));
+		fflush(stdout);
+		scanf("%d", &p[i]);
+	}
+
+	for(int i=0; i<qtd; i++){
+		printf("No vetor numeros[%d] está o valor: %d \n",i,p[i]);
+	}
+
+	printf("A variavel 'p' ocupa %ld bytes de momória\n ",bytes);
+
+	return 0;
+}
