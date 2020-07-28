@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<string.h>
+#include<math.h>
+// funções matematicas
+
+/*
+//para utilizar a biblioteca math:
+a) clicar com o botão direito do mause no projeto_c
+b) It em C/C++ build -> settings -> libraries
+c) clicar no + e add 'm'#include<string.h>
+d)aplicar e fechar
+*/
+
+int main(){
+
+	int angulo =45;
+	float res = cos(angulo);
+	float res2 = sin(angulo);
+	float res3 = tan(angulo);
+	float res4 = cosh(angulo);
+	float res5 = sinh(angulo);
+	float res6 = tanh(angulo);
+	double a =0;
+	double b=1;
+	double c=2;
+	int valor =42;
+	int d =3;
+	int e =2;
+	int f= 9;
+	
+
+	printf("==========Angulos===============\n");
+	printf("O cosseno de %d é: %f\n", angulo, res);
+	printf("O seno de %d é: %f\n", angulo, res2);
+	printf("O tangente de %d é: %f\n", angulo, res3);
+	printf("O cosseno hiberbolico de %d é: %f\n", angulo, res4);
+	printf("O seno hiberbolico de %d é: %f\n", angulo, res5);
+	printf("O tangente hiberbolico de %d é: %f\n", angulo, res6);
+	printf("==========Exponencial===============\n");
+	printf("O exponencial de %lf é %lf\n", a, exp(a));
+	printf("O exponencial de %lf é %lf\n", b, exp(b));
+	printf("O exponencial de %lf é %lf\n", c, exp(c));
+	printf("==========LOG===============\n");
+	printf("O log de %d é %lf\n", valor, log(valor));
+	printf("O log base 10 de %d é %lf\n", valor, log10(valor));
+	printf("==========Elevado===============\n");
+	printf("%d elevado a %d é %lf\n", d,e, pow(a,b));
+	printf("==========Raiz quadrada===============\n");
+	printf("A raiz quadrada de %d é %lf\n", f, sqrt(f));
+	
+	return 0;
+}
