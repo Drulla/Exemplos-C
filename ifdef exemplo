@@ -1,0 +1,19 @@
+#include<stdio.h>
+
+#ifndef PI //cria caso nao exista
+	#define PI 3.41567 // constante
+#endif
+
+int main(){
+
+	int valor = 5; //variavel
+
+	printf("O valor é %d\n", valor);
+	printf("PI vale %f\n", PI);
+
+	#ifdef PI //executa se ja era existente
+		printf("O valor de PI é %f e ja estava definido\n",PI);
+	#endif
+
+	return 0;
+}
