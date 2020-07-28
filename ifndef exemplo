@@ -1,0 +1,16 @@
+#include<stdio.h>
+//ifndef - diretiva de compilação
+
+#ifndef PI
+	#define PI 3.41567 // constante
+#endif
+
+int main(){
+
+	int valor = 5; //variavel
+
+	printf("O valor é %d\n", valor);
+	printf("PI vale %f\n", PI);
+
+	return 0;
+}
