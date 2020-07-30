@@ -1,0 +1,59 @@
+#include<stdio.h>
+
+void merge(int vetor[], int inicio1, int fim1, int inicio2, int fim2){
+	int tem[50];
+	//variaveis auxiliares
+	int i, j, k;
+	i=inicio1;
+	j= inicio2;
+	k=0;
+
+	//enquanto tiver elementos em ambos os grupos...
+	while (i<=fim1 && j<=fim2){
+		//faz a ordenação de acordo com cada grupo
+		if(vetor[i]< vetor[j]){
+			tem[k++] = vetor [i++];
+		}else{
+			tem[k++]= vetor[j++];
+		}
+	}
+	//copiar os elementos restantes do primeiro grupo
+	while(i<=fim1){
+		tem[k++]=vetor[i++];
+	}
+	//copiar os elementos restantes do segundo grupo
+	while(j<=fim2){
+		tem[k++]=vetor[j++];
+	}
+	//transfere os elementos do vetor temporario para o original
+	for(i=inicio1, j=0 ; i<=fim2 ; i++, j++ ){
+		vetor[i]=tem[j];
+	}
+
+}
+
+void merge_sort(int vetor[], int inicio, int fim){
+	if(inicio< fim){
+		//calcular o meio do vetor
+		int meio = inicio + fim /2;
+		//recursao esquerda
+		merge_sort(vetor, inicio, meio);
+		//recursao direita
+		merge_sort(vetor, meio, fim);
+		// faz o merge(junta)
+		merge(vetor, inicio, meio, meio+1, fim);
+	}
+}
+
+int main(){
+
+	int vetor[6]={8,3,1,45,12,5};
+
+	merge_sort(vetor,0, 6 - 1);
+
+	for(int i=0; i<6; i++){
+		printf("%d\n", vetor[i]);
+	}
+
+	return 0;
+}
